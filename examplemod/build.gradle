@@ -1,3 +1,4 @@
+import org.apache.tools.ant.taskdefs.condition.Os
 plugins {
     id 'java'
     id 'maven-publish'
@@ -58,5 +59,10 @@ tasks.register('runClient', Exec) {
     //TODO: actually add stuff to classpath instead of compiling and copying.
     dependsOn 'buildAndCopy'
     workingDir "${project.rootDir}/run/"
-    commandLine 'sh', "${project.rootDir}/run/launch.sh"
+    if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd', '/c', "${project.rootDir}/run/launch.bat"
+    }else{
+        commandLine 'sh', "${project.rootDir}/run/launch.sh"
+    }
+
 }
