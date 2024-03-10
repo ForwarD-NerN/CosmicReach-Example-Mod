@@ -1,0 +1,24 @@
+{
+    "schemaVersion": 1,
+    "id": "examplemod",
+    "version": "${version}",
+    "name": "Example Mod",
+    "description": "Fabric mod for Cosmic Reach!",
+    "authors": [
+      "ForwarD NerN"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {
+      "main": [
+        "com.example.examplemod.ExampleMod"
+      ]
+    },
+    "mixins": [
+      "examplemod.mixins.json"
+    ],
+    "depends": {
+      "fabricloader": ">=0.13.3",
+      "cosmic_reach": ">=0.1.0"
+    }
+  }
