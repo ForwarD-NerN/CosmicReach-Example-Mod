@@ -15,3 +15,8 @@ This is an example mod for Cosmic Reach game based on Fabric Mod Loader.
 1. There's no automatic way for it currently. You need to manually decompile the game jar with JD-gui or other
    decompilers and export it sources.
 2. Then you need to choose them with IntelIj.
+
+## Credits
+
+1. EliteMasterEric for the [original template](https://github.com/EliteMasterEric/HelloWorldFabric)
+2. KaboomRoads for making MixinExtras work and fixing a lot of stuff
