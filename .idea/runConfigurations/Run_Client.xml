@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Client" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="17" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="net.fabricmc.loader.impl.launch.knot.KnotClient" />
+    <module name="Cosmic-Example-Mod.examplemod.main" />
+    <option name="PROGRAM_PARAMETERS" value="-Dfabric.skipMcProvider=true -Dfabric.side=client -Dfabric.development=true -classpath &quot;$ProjectFileDir$/examplemod/*&quot;" />
+    <option name="WORKING_DIRECTORY" value="$ProjectFileDir$/run" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="Gradle.BeforeRunTask" enabled="true" tasks="buildAndCopy" externalProjectPath="$PROJECT_DIR$/examplemod" vmOptions="" scriptParameters="" />
+    </method>
+  </configuration>
+</component>

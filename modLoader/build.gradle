@@ -32,8 +32,8 @@ allprojects {
 }
 
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 version = '1.1.0'
 group = "ru.nern"
@@ -44,26 +44,22 @@ dependencies {
     api 'com.google.code.gson:gson:2.9.1'
 
     // Fabric dependencies
-    api "net.fabricmc:fabric-loader:0.15.7"
+    api "net.fabricmc:fabric-loader:$loader_version"
     api "net.fabricmc:tiny-mappings-parser:0.2.2.14"
     api "net.fabricmc:access-widener:2.1.0"
 
     // Mixin dependencies
-    api "org.ow2.asm:asm:${project.asm_version}"
-    api "org.ow2.asm:asm-analysis:${project.asm_version}"
-    api "org.ow2.asm:asm-commons:${project.asm_version}"
-    api "org.ow2.asm:asm-tree:${project.asm_version}"
-    api "org.ow2.asm:asm-util:${project.asm_version}"
-    api("net.fabricmc:sponge-mixin:${project.mixin_version}") {
+    api "org.ow2.asm:asm:$asm_version"
+    api "org.ow2.asm:asm-analysis:$asm_version"
+    api "org.ow2.asm:asm-commons:$asm_version"
+    api "org.ow2.asm:asm-tree:$asm_version"
+    api "org.ow2.asm:asm-util:$asm_version"
+    api("net.fabricmc:sponge-mixin:$mixin_version") {
         exclude module: 'launchwrapper'
         exclude group: 'com.google.guava'
         exclude group: 'com.google.code.gson'
     }
-    //api "org.spongepowered:mixin:${project.mixin_version}"
-
-    api "io.github.llamalad7:mixinextras-fabric:${mixin_extras_version}"
-    
-
+    api annotationProcessor("io.github.llamalad7:mixinextras-fabric:$mixin_extras_version")
 }
 
 sourceSets {
@@ -75,19 +71,19 @@ sourceSets {
 }
 
 jar {
-	manifest {
-		attributes(
-			'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' '),
-			'Specification-Version': 8.0,
-			'Multi-Release': 'true'
-		)
-	}
+    manifest {
+        attributes(
+                'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' '),
+                'Specification-Version': 8.0,
+                'Multi-Release': 'true'
+        )
+    }
 }
 
-task copyDependencies(type: Copy) {
-  group 'build'
-  from configurations.runtimeClasspath
-  into "build/libs/deps/"
+tasks.register('copyDependencies', Copy) {
+    group 'build'
+    from configurations.runtimeClasspath
+    into "build/libs/deps/"
 }
 
 assemble {
@@ -96,9 +92,10 @@ assemble {
     dependsOn 'copyDependencies'
 }
 
-task buildAndCopy(type: Copy) {
-  group 'build'
-  dependsOn 'assemble'
-  from "build/libs/"
-  into "../run/"
+tasks.register('buildAndCopy', Copy) {
+    group 'build'
+    dependsOn 'assemble'
+    from "build/libs/"
+    into "../run/"
 }
+

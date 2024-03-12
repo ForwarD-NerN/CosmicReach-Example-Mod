@@ -1,25 +1,23 @@
 {
-    "schemaVersion": 1,
-    "id": "examplemod",
-    "version": "${version}",
-    "name": "Example Mod",
-    "description": "Fabric mod for Cosmic Reach!",
-    "authors": [
-      "ForwarD NerN"
-    ],
-    "license": "CC0-1.0",
-    "icon": "assets/examplemod/icon.png",
-    "environment": "*",
-    "entrypoints": {
-      "main": [
-        "com.example.examplemod.ExampleMod"
-      ]
-    },
-    "mixins": [
-      "examplemod.mixins.json"
-    ],
-    "depends": {
-      "fabricloader": ">=0.13.3",
-      "cosmic_reach": ">=0.1.0"
-    }
+  "schemaVersion": 1,
+  "id": "${modid}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "Fabric mod for Cosmic Reach!",
+  "authors": [
+  ],
+  "license": "CC0-1.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.example.examplemod.ExampleMod"
+    ]
+  },
+  "mixins": [
+    "examplemod.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "cosmic_reach": ">=${cosmicreach_version}"
   }
+}

@@ -3,7 +3,8 @@ package ru.nern.modloader;
 import net.fabricmc.loader.impl.util.log.Log;
 import net.fabricmc.loader.impl.util.log.LogCategory;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
@@ -14,7 +15,6 @@ public class CRVersion {
 
     //Parsing the game version
     public CRVersion(Path path) {
-
         String version = "0.0.0";
 
         try {

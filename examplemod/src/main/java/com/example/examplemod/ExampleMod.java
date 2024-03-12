@@ -10,6 +10,6 @@ public class ExampleMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        LOGGER.info("Hello Cosmic world!");
+        LOGGER.info("Hello non Cosmic world!");
     }
 }

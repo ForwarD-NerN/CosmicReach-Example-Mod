@@ -1,21 +1,19 @@
 package ru.nern.modloader.patch;
 
-import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.fabricmc.loader.impl.game.patch.GamePatch;
 import net.fabricmc.loader.impl.launch.FabricLauncher;
 import net.fabricmc.loader.impl.util.log.Log;
 import net.fabricmc.loader.impl.util.log.LogCategory;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
-import org.objectweb.asm.tree.*;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
 import ru.nern.modloader.CosmicHooks;
 
-import java.util.ListIterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class CRInitPatch extends GamePatch {
-
     @Override
     public void process(FabricLauncher launcher, Function<String, ClassNode> classSource, Consumer<ClassNode> classEmitter) {
         // Get the game's entrypoint (set in the GameProvider) from FabricLauncher
@@ -35,7 +33,6 @@ public class CRInitPatch extends GamePatch {
         if (mainClass == null) {
             throw new RuntimeException("Could not load main class " + entrypoint + "!");
         }
-
         /* Set the initializer method, this is usually not the main method,
          * it should ideally be placed as close to the game loop as possible without being inside it...*/
         MethodNode initMethod = findMethod(mainClass, (method) -> method.name.equals("main"));
@@ -50,38 +47,8 @@ public class CRInitPatch extends GamePatch {
         Log.debug(LogCategory.GAME_PATCH, "Patching init method %s%s", initMethod.name, initMethod.desc);
 
         // Assign the variable `it` to the list of instructions for our initializer method.
-        ListIterator<AbstractInsnNode> it = initMethod.instructions.iterator();
         // Add our hooks to the initializer method.
-        //it.add(new MethodInsnNode(Opcodes.INVOKESTATIC, CosmicHooks.INTERNAL_NAME, "init", "()V", false));
-        injectTailInsn(initMethod, new MethodInsnNode(
-                Opcodes.INVOKESTATIC,
-                CosmicHooks.INTERNAL_NAME,
-                "init",
-                "()V",
-                false));
-        // And finally, apply our changes to the class.
+        initMethod.instructions.iterator().add(new MethodInsnNode(Opcodes.INVOKESTATIC, CosmicHooks.INTERNAL_NAME, "init", "()V", false));
         classEmitter.accept(mainClass);
-    }
-
-    /**
-     * @see org.spongepowered.asm.mixin.injection.points.BeforeFinalReturn#find
-     */
-    //For some reason, it will now crash without this. Thank you https://github.com/Qendolin/mindustry-fabric-loader
-    private static void injectTailInsn(MethodNode method, AbstractInsnNode injectedInsn) {
-        AbstractInsnNode ret = null;
-
-        // RETURN opcode varies based on return type, thus we calculate what opcode we're actually looking for by inspecting the target method
-        int returnOpcode = Type.getReturnType(method.desc).getOpcode(Opcodes.IRETURN);
-        for (AbstractInsnNode insn : method.instructions) {
-            if (insn instanceof InsnNode && insn.getOpcode() == returnOpcode) {
-                ret = insn;
-            }
-        }
-
-        if (ret == null) {
-            throw new RuntimeException("TAIL could not locate a valid RETURN in the target method!");
-        }
-
-        method.instructions.insertBefore(ret, injectedInsn);
     }
 }

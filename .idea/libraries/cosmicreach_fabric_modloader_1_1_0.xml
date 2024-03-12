@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="cosmicreach-fabric-modloader-1.1.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/run/cosmicreach-fabric-modloader-1.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="FacetManager">
+    <facet type="minecraft" name="Minecraft">
+      <configuration>
+        <autoDetectTypes>
+          <platformType>FABRIC</platformType>
+          <platformType>MIXIN</platformType>
+        </autoDetectTypes>
+        <projectReimportVersion>1</projectReimportVersion>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="cosmicreach-fabric-modloader-1.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.9.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.errorprone:error_prone_annotations:2.23.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:failureaccess:1.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:guava:33.0.0-jre" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.j2objc:j2objc-annotations:2.8" level="project" />
+    <orderEntry type="library" name="Gradle: io.github.llamalad7:mixinextras-fabric:0.3.5" level="project" />
+    <orderEntry type="library" name="Gradle: net.fabricmc:access-widener:2.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: net.fabricmc:fabric-loader:0.15.7" level="project" />
+    <orderEntry type="library" name="Gradle: net.fabricmc:sponge-mixin:0.12.5+mixin.0.8.5" level="project" />
+    <orderEntry type="library" name="Gradle: net.fabricmc:tiny-mappings-parser:0.2.2.14" level="project" />
+    <orderEntry type="library" name="Gradle: org.checkerframework:checker-qual:3.41.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-analysis:9.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-commons:9.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-tree:9.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm-util:9.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.ow2.asm:asm:9.6" level="project" />
+  </component>
+</module>

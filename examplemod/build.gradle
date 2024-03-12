@@ -1,15 +1,17 @@
-import org.apache.tools.ant.taskdefs.condition.Os
 plugins {
     id 'java'
     id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
-archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+
+base {
+    archivesName = "$mod_name-CR-$cosmicreach_version"
+}
 
 repositories {
     mavenCentral()
@@ -26,16 +28,24 @@ repositories {
 
 dependencies {
     //Cosmic Reach main jar
-    implementation(files("${project.rootDir}/run/cosmic-reach.jar"))
+    implementation(files("$project.rootDir/run/cosmic-reach.jar"))
     implementation project(':modLoader')
 }
 
 processResources {
     inputs.property "version", project.version
+    inputs.property "loader_version", project.loader_version
+    inputs.property "cosmicreach_version", project.cosmicreach_version
+    inputs.property "mod_name", project.mod_name
+    inputs.property "modid", project.modid
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.version
+        expand "version": project.version,
+                "loader_version": project.loader_version,
+                "cosmicreach_version": project.cosmicreach_version,
+                "mod_name": project.mod_name,
+                "modid": project.modid
     }
 }
 
@@ -45,7 +55,7 @@ tasks.withType(JavaCompile).configureEach {
     // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
     // If Javadoc is generated, this must be specified in that task too.
     it.options.encoding = "UTF-8"
-    it.options.release = 16
+    it.options.release = 17
 }
 
 tasks.register('buildAndCopy', Copy) {
@@ -55,14 +65,18 @@ tasks.register('buildAndCopy', Copy) {
     into "../run/mods"
 }
 
-tasks.register('runClient', Exec) {
-    //TODO: actually add stuff to classpath instead of compiling and copying.
-    dependsOn 'buildAndCopy'
-    workingDir "${project.rootDir}/run/"
-    if(Os.isFamily(Os.FAMILY_WINDOWS)) {
-        commandLine 'cmd', '/c', "${project.rootDir}/run/launch.bat"
-    }else{
-        commandLine 'sh', "${project.rootDir}/run/launch.sh"
-    }
+//sourceSets.main {
+//    runtimeClasspath += files("${project.rootDir}/examplemod")
+//}
 
-}
+//TODO: maybe fix it? It works fine without, but it would be more correct.
+//tasks.register('runMain', JavaExec) {
+//    setMainClass("net.fabricmc.loader.impl.launch.knot.KnotClient")
+//    jvmArgs('-Dfabric.skipMcProvider=true', '-Dfabric.side=client', '-Dfabric.development=true')
+//    workingDir "${project.rootDir}/run/"
+//
+//    classpath = sourceSets.main.runtimeClasspath
+//    //classpath += files("${project.rootDir}/examplemod/build/classes/java/")
+//    //For debugging:
+//    project.logger.lifecycle('Classpath: ' + sourceSets.main.runtimeClasspath.asPath)
+//}
