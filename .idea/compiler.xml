@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="com.example.examplemod.Cosmic-Example-Mod.examplemod.main~1" target="17" />
+      <module name="com.example.examplemod.Cosmic-Example-Mod.examplemod.test~1" target="17" />
+      <module name="com.example.examplemod.Cosmic-Example-Mod.mod" target="17" />
+      <module name="Cosmic-Example-Mod.mod.main" target="17" />
+      <module name="Cosmic-Example-Mod.mod.test" target="17" />
+      <module name="Cosmic-Example-Mod.modLoader" target="17" />
+      <module name="Cosmic-Example-Mod.modLoader.main" target="17" />
+      <module name="modLoader.Cosmic-Example-Mod.modLoader.test" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
