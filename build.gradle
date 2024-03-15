@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id "de.undercouch.download" version "5.6.0"
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -26,10 +27,17 @@ repositories {
     }
 }
 
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+}
+
 dependencies {
-    //Cosmic Reach main jar
-    implementation(files("$project.rootDir/run/cosmic-reach.jar"))
-    implementation project(':modLoader')
+    implementation fileTree(dir: 'run/', include: ['*.jar'])
+    implementation fileTree(dir: 'run/deps', include: ['*.jar'])
 }
 
 processResources {
@@ -62,21 +70,31 @@ tasks.register('buildAndCopy', Copy) {
     group 'build'
     dependsOn 'assemble'
     from "build/libs/"
-    into "../run/mods"
+    into "run/mods"
 }
 
-//sourceSets.main {
-//    runtimeClasspath += files("${project.rootDir}/examplemod")
-//}
+tasks.register('downloadModLoader', Download) {
+    group 'fabric'
+    src "https://github.com/ForwarD-NerN/CosmicReach-Mod-Loader/releases/download/latest/cosmicreach-fabric-modloader.zip"
+    dest "run/"
+}
 
-//TODO: maybe fix it? It works fine without, but it would be more correct.
-//tasks.register('runMain', JavaExec) {
-//    setMainClass("net.fabricmc.loader.impl.launch.knot.KnotClient")
-//    jvmArgs('-Dfabric.skipMcProvider=true', '-Dfabric.side=client', '-Dfabric.development=true')
-//    workingDir "${project.rootDir}/run/"
-//
-//    classpath = sourceSets.main.runtimeClasspath
-//    //classpath += files("${project.rootDir}/examplemod/build/classes/java/")
-//    //For debugging:
-//    project.logger.lifecycle('Classpath: ' + sourceSets.main.runtimeClasspath.asPath)
-//}
+
+tasks.register('setupEnvironment', Copy) {
+    group 'fabric'
+    dependsOn downloadModLoader
+
+    from zipTree(file(new File("run/cosmicreach-fabric-modloader.zip")))
+    into "run/"
+    exclude("launch.sh", "launch.bat")
+
+    doLast {
+        var gameJar = fileTree("${project.rootDir}/run/").filter { file ->
+            return file.name.startsWith("Cosmic Reach-")
+        }
+        if(!gameJar.getFiles().isEmpty()) {
+            gameJar.getSingleFile().renameTo("run/cosmic-reach.jar")
+        }
+        delete("run/cosmicreach-fabric-modloader.zip")
+    }
+}
