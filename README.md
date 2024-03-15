@@ -1,6 +1,6 @@
 # Cosmic Example Mod
 
-This is an example mod for Cosmic Reach game based on Fabric Mod Loader.
+This is an example mod for the Cosmic Reach game based on Fabric Mod Loader.
 
 ## How to use
 
