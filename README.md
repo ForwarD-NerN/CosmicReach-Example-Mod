@@ -2,15 +2,14 @@
 
 This is an example mod for Cosmic Reach game based on Fabric Mod Loader.
 
-## How to setup
+## How to use
 
 1. Load the Gradle project in IntelIJ
-2. Download the Cosmic Reach game jar and put it into the /run/ folder. 
-3. Rename it to "cosmic-reach.jar"
-4. Download the [latest mod loader](https://github.com/ForwarD-NerN/CosmicReach-Mod-Loader/releases/latest) archive
-5. Unzip it in the /run/ folder
-6. Reload the Gradle project.
-7. Run "Run Client" application task in IntelIJ. It should launch the game.
+2. Download the latest version of [Cosmic Reach](https://finalforeach.itch.io/cosmic-reach) jar
+3. Extract the Cosmic-Reach.X.X.X.jar into the **runs** folder.
+4. Run fabric:setupEnvironment gradle task
+5. Reload the Gradle project.
+6. Run "Run Client" application task in IntelIJ. It should launch the game.
 
 ## How to setup sources
 
