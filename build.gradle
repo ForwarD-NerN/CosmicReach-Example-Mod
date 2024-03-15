@@ -70,5 +70,31 @@ tasks.register('buildAndCopy', Copy) {
     group 'build'
     dependsOn 'assemble'
     from "build/libs/"
-    into "../run/mods"
+    into "run/mods"
+}
+
+tasks.register('downloadModLoader', Download) {
+    group 'fabric'
+    src "https://github.com/ForwarD-NerN/CosmicReach-Mod-Loader/releases/download/latest/cosmicreach-fabric-modloader.zip"
+    dest "run/"
+}
+
+
+tasks.register('setupEnvironment', Copy) {
+    group 'fabric'
+    dependsOn downloadModLoader
+
+    from zipTree(file(new File("run/cosmicreach-fabric-modloader.zip")))
+    into "run/"
+    exclude("launch.sh", "launch.bat")
+
+    doLast {
+        var gameJar = fileTree("${project.rootDir}/run/").filter { file ->
+            return file.name.startsWith("Cosmic Reach-")
+        }
+        if(!gameJar.getFiles().isEmpty()) {
+            gameJar.getSingleFile().renameTo("run/cosmic-reach.jar")
+        }
+        delete("run/cosmicreach-fabric-modloader.zip")
+    }
 }
