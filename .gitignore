@@ -1,6 +1,8 @@
 .gradle/
 build/
 *.log
-.idea/
 
+.idea/*
+!.idea
+!.idea/runConfigurations
 !.idea/runConfigurations/Run_Client.xml
